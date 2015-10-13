@@ -1,0 +1,31 @@
+	lxi B,03E8h
+	mvi D,00h
+	lda 2000h
+	rlc
+	jnc START
+	mvi A,0DH ;mask for RST6.5
+	sim
+	ei
+START:
+	mov A,D
+	cma
+	sta 3000h
+	di
+	call DELB
+MSBCON:
+	lda 2000h
+	rlc
+	jnc SKIPINT
+	mvi A,0Dh
+	sim
+	ei
+SKIPINT:
+	jmp START	
+
+
+INTR_ROUTINE:
+	inr D	
+	ret
+
+END:
+	end
