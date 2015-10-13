@@ -1,0 +1,15 @@
+lxi B,03E8H
+call BEEP
+loop1:
+mvi C,00H
+start:
+	mov A,C
+	cma 
+	sta 3000H
+	call DELB
+	cma
+	cpi 0FH
+	jz loop1
+	inr C
+	jmp start
+end

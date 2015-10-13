@@ -1,0 +1,18 @@
+	MVI A,00H
+LOOP1:
+	STA 3000H
+	
+	NOP
+	NOP
+	NOP
+
+	INR A
+	JMP LOOP1
+
+; energopoihsh RST6.5
+
+	MVI A,0DH
+	SIM   	; stelnoume maska gia RST6.5
+	EI	; energopoihsh diakopwn 
+
+

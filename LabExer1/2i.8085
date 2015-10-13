@@ -1,0 +1,39 @@
+	LXI B,0064H   ; elaxisth vhma 200ms 
+FLASH: 
+	CALL ON1
+	LDA 2000H
+	RAR	; 4 aristerotera gia anoigma 
+	RAR
+	RAR
+	RAR
+	ANI 0FH  ; na kratisw mono ta 4 aristerotera pou ta fera deksia
+	CALL DELAY
+	
+	CALL OFF1
+	LDA 2000H 
+	ANI 0FH ; krataw ta 4 deksiotera
+	CALL DELAY
+
+	JMP FLASH
+ON1:
+	MVI A,00H
+	STA 3000H
+	RET
+OFF1:
+	MVI A,FFH
+	STA 3000H
+	RET
+
+DELAY:
+	CALL DELB
+	CALL DELB
+LOOP1:
+	CPI 00H 
+	JZ RETURN
+	DCR A
+	CALL DELB 
+	JMP DELAY
+RETURN:
+	RET
+END:
+	END
