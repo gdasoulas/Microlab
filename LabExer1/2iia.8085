@@ -1,17 +1,33 @@
-	lxi B,03E8h
-	mvi D,00h
+	lxi B,0032h
+	mvi H,00h
 	lda 2000h
 	rlc
-	jnc START
+	jnc TIMER1
 	mvi A,0DH ;mask for RST6.5
 	sim
 	ei
-START:
+
+TIMER1: mvi D,00H   ; counter for timer 
+
+LOOP1: 
+	mov A,H
+	rlc
+	rlc
+	rlc
+	rlc
+	ani F0h
+	mov E,A
 	mov A,D
+	add E
 	cma
 	sta 3000h
-	di
 	call DELB
+	call DELB
+	cma 
+	ani 0FH
+	cpi 0Fh
+	jz TIMER1
+	inr D
 MSBCON:
 	lda 2000h
 	rlc
@@ -20,11 +36,14 @@ MSBCON:
 	sim
 	ei
 SKIPINT:
-	jmp START	
-
+	jmp LOOP1	
 
 INTR_ROUTINE:
-	inr D	
+	di
+	call DELB	
+	call DELB
+	inr H	
+	call DELB
 	ret
 
 END:
