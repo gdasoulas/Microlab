@@ -1,0 +1,39 @@
+MVI A,0DH
+SIM
+EI
+
+LXI B,0032H  ;  gia 50ms
+
+
+WAIT:  JMP WAIT
+
+
+
+INTR_ROUTINE:
+	MVI D,00H   ; metrhths asswn
+	LDA 2000H
+	MVI H,08H
+	
+LOOPA:
+	DCR H
+	JZ STOP
+	RLC
+	JNC LOOPA
+	INR D     ; +1 giati vrhkame asso
+	JMP LOOPA
+
+STOP:
+	MOV A,D
+	RLC
+	RLC
+	RLC
+	RLC
+	CMA 
+	STA 3000H
+	MVI A,0DH
+	SIM
+	EI
+	CALL DELB
+	RET
+	
+END
