@@ -11,6 +11,8 @@ TIMER1: mvi D,00H   ; counter for timer
 
 LOOP1: 
 	mov A,H
+	RRC	; diairesi me to 2 gia na mhn krataei diples diakopes
+	ani 7Fh
 	rlc
 	rlc
 	rlc
@@ -39,11 +41,7 @@ SKIPINT:
 	jmp LOOP1	
 
 INTR_ROUTINE:
-	di
-	call DELB	
-	call DELB
 	inr H	
-	call DELB
 	ret
 
 END:
