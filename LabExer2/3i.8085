@@ -1,0 +1,57 @@
+	IN 10H
+START:
+	LDA 2000H
+	MOV B,A	; ston B einai const apothikeymeno h apeikonish twn dip switches
+	ANI 01H 	; prwto psifio 
+	MOV C,A 
+	MOV A,B	
+	ANI 02H 	; deutero psifio
+	RRC		; metaferoume to psifio gia na ginei h praksi 
+	ANA C		; A0 AND B0
+	
+	MOV C,A		
+	MOV A,B
+	ANI 04H	; trito psifio
+	MOV D,A		
+	MOV A,B
+	ANI 08H	; tetarto psifio 
+	RRC
+	ANA D		; A1 AND B1
+	MOV D,A
+	RRC
+	RRC
+	XRA C		; X0 = (A1 AND B1 ) XOR (A0 AND B0)
+	MOV C,A
+	MOV A,D
+	RRC		; metaferoume to psifio gia na ginei h praksi 
+	ADD C
+	MOV C,A 	; X1 kai X0 ston C	
+	MOV A,B
+	ANI 10H	; pempto psifio 
+	MOV D,A
+	MOV A,B
+	ANI 20H 	; ekto psifio 
+	RRC
+	ORA D		; A2 OR B2
+	RRC
+	RRC
+	ADD C		; X2 , X1 kai X0 ston C
+	MOV C,A	
+	MOV A,B
+	ANI 40H	; evdomo psifio
+	MOV D,A
+	MOV A,B
+	ANI 80H	; ogdoo psifio
+	RRC		; metaferoume to psifio gia na ginei h praksi
+	ORA D		; A3 OR B3
+	RRC
+	RRC
+	RRC
+	ADD C		; X3, X2, X1 kai X0 ston A
+	CMA 
+	STA 3000H
+	JMP START
+END:	
+	END
+	
+	
