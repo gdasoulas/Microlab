@@ -1,6 +1,15 @@
+	LXI H,0B00H
+	MVI M,10H
+	INX H 
+	MVI M,10H
+	INX H 
+	MVI M,10H
+	INX H 
+	MVI M,10H
 START:
    	LXI H,0B04H	; dyo theseis deksia apo 0b00 gia na paei
 			; sta 2 aristerotera displays
+	
 	CALL KIND	; apothikeusi ston sysswreuth A
 	MOV C,A
 	ANI 0FH	; kratame ta 4 LSBs gia to deksiotero display
@@ -8,6 +17,10 @@ START:
 	INX H
 	MOV A,C
 	ANI F0H	; kratame ta 4 MSBs gia to aristero display
+	RRC 
+	RRC
+	RRC
+	RRC
 	MOV M,A	
 	LXI D,0B00H
 	CALL STDM
