@@ -1,0 +1,53 @@
+IN 10H
+
+START:
+
+LDA 2000H
+
+BINTOHEX:
+        MOV C,A   ; check msb for sign
+        ANI 80H 
+        CPI 80H
+        JZ MINUS
+        MVI A,00H ; positive-sign set to zero
+        STA 0B03H ; store sign to 4th display
+        MOV A,C
+        JMP CON1
+MINUS:
+        MVI A,1CH ; negative-sign set to appropriate symbol
+        STA 0B03H ; store sign to 4th display
+        MOV A,C
+        CMA 
+        ADI 01H 
+CON1:   
+        MVI B,00H ; B stores tens
+        MVI C,00H ; C stores hundeds
+LO:
+        SUI 64H
+        JC LO1
+        INR C 
+        JMP LO
+LO1:
+        ADI 64H
+LO2:
+        SUI 0AH
+        JC LO3
+        INR B
+        JMP LO2
+LO3:
+        ADI 0AH
+ 
+;Following code handles printing to the display
+LXI H,0B00H
+MOV M,A
+INX H
+MOV M,B
+INX H
+MOV M,C
+LXI D,0B00H
+CALL STDM
+CALL DCD
+
+JMP START
+
+END
