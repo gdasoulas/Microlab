@@ -44,6 +44,11 @@ INX H
 MOV M,B
 INX H
 MOV M,C
+INX H
+INX H
+MVI A,10H ; disable the two rightmost displays
+STA 0B04H
+STA 0B05H
 LXI D,0B00H
 CALL STDM
 CALL DCD
